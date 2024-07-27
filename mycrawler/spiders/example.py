@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 class ExampleSpider(scrapy.Spider):
     name = "test"
-    start_urls = ['http://example.com']
+    start_urls = ['https://www.youtube.com/']
 
     def __init__(self, *args, **kwargs):
         super(ExampleSpider, self).__init__(*args, **kwargs)
@@ -38,13 +38,15 @@ class ExampleSpider(scrapy.Spider):
             self.log(f"Graph contains {len(self.graph.nodes)} nodes and {len(self.graph.edges)} edges.")
             pos = nx.spring_layout(self.graph)  # Positionnement des nœuds
             plt.figure(figsize=(100, 100))  # Définit une taille de figure raisonnable
-            nx.draw(self.graph, pos, with_labels=True, node_size=50, font_size=8, arrowsize=10)
+            nx.draw(self.graph, pos, with_labels=True, node_size=50, font_size=8, arrowsize=10, font_color='red')
+            print("Domains:", self.domains)
             try:
                 plt.savefig("graph.png")  # Enregistre le graphe dans un fichier image
                 self.log("Graph saved successfully.")
             except Exception as e:
                 self.log(f"Error saving graph: {e}")
             finally:
+                print("Domains:", self.domains)
                 plt.close()  # Ferme la figure pour libérer des ressources
         else:
             self.log("Le graphe est vide. Aucun nœud n'a été ajouté.")
